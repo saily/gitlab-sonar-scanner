@@ -1,6 +1,8 @@
 gitlab-sonar-scanner
 ====================
 
+> This is a fork with JDK 10 support
+
 [![pulls][docker hub svg]][docker hub]
 
 Container to be used with [sonar gitlab plugin][].
