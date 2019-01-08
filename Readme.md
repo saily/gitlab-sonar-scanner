@@ -1,9 +1,16 @@
 gitlab-sonar-scanner
 ====================
 
+> This is a fork with `JDK 10,11,12` and `Typescript` support
+
 [![pulls][docker hub svg]][docker hub]
 
 Container to be used with [sonar gitlab plugin][].
+
+- [ts](https://github.com/saily/gitlab-sonar-scanner/blob/ts/Dockerfile)
+- [jdk10](https://github.com/saily/gitlab-sonar-scanner/blob/jdk10/Dockerfile)
+- [jdk11](https://github.com/saily/gitlab-sonar-scanner/blob/jdk11/Dockerfile)
+- [jdk12](https://github.com/saily/gitlab-sonar-scanner/blob/jdk12/Dockerfile)
 
 Using it in your gitlab projects
 --------------------------------
@@ -16,7 +23,7 @@ stages:
 
 sonarqube:
   stage: analysis
-  image: ciricihq/gitlab-sonar-scanner
+  image: widerin/gitlab-sonar-scanner
   variables:
     SONAR_URL: http://your.sonarqube.server
     SONAR_ANALYSIS_MODE: issues
@@ -53,7 +60,7 @@ stages:
 
 sonarqube-reports:
   stage: analysis
-  image: ciricihq/gitlab-sonar-scanner
+  image: widerin/gitlab-sonar-scanner
   variables:
     SONAR_URL: http://your.sonarqube.server
     SONAR_ANALYSIS_MODE: publish
@@ -71,7 +78,7 @@ stages:
 
 sonarqube:
   stage: analysis
-  image: ciricihq/gitlab-sonar-scanner
+  image: widerin/gitlab-sonar-scanner
   variables:
     SONAR_URL: http://your.sonarqube.server
     SONAR_ANALYSIS_MODE: issues
@@ -80,7 +87,7 @@ sonarqube:
 
 sonarqube-reports:
   stage: analysis
-  image: ciricihq/gitlab-sonar-scanner
+  image: widerin/gitlab-sonar-scanner
   variables:
     SONAR_URL: http://your.sonarqube.server
     SONAR_ANALYSIS_MODE: publish
@@ -116,7 +123,7 @@ You can pass any additional option to the `gitlab-sonar-scanner` binnary, if nee
 
 ~~~yaml
 sonarqube-reports:
-  image: ciricihq/gitlab-sonar-scanner
+  image: widerin/gitlab-sonar-scanner
   variables:
     SONAR_URL: http://your.sonarqube.server
     SONAR_ANALYSIS_MODE: publish
@@ -136,7 +143,7 @@ See [LICENSE][] for more details
 
 [sonar gitlab plugin]: https://github.com/gabrie-allaigre/sonar-gitlab-plugin
 [variables]: https://docs.gitlab.com/ce/ci/variables
-[docker hub]: https://hub.docker.com/r/ciricihq/gitlab-sonar-scanner
+[docker hub]: https://hub.docker.com/r/widerin/gitlab-sonar-scanner
 [LICENSE]: ./LICENSE
 
-[docker hub svg]: https://img.shields.io/docker/pulls/ciricihq/gitlab-sonar-scanner.svg
+[docker hub svg]: https://img.shields.io/docker/pulls/widerin/gitlab-sonar-scanner.svg
