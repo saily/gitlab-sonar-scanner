@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jre-alpine
 
 ENV SONAR_SCANNER_VERSION 3.3.0.1492
 
@@ -13,9 +13,11 @@ RUN \
     mv -fv /tmp/sonar-scanner-${SONAR_SCANNER_VERSION}/bin/sonar-scanner /usr/bin && \
     mv -fv /tmp/sonar-scanner-${SONAR_SCANNER_VERSION}/lib/* /usr/lib
 
-RUN \
-    apk add --no-cache nodejs && \
+RUN apk add --no-cache nodejs nodejs-npm && \
+    npm install --silent --save-dev -g typescript && \
     ls -lha /usr/bin/sonar* && \
     ln -s /usr/bin/sonar-scanner-run.sh /usr/bin/gitlab-sonar-scanner
+
+ENV NODE_PATH /usr/lib/node_modules
 
 WORKDIR /usr/bin
