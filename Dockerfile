@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:10-jdk-slim
 
 ENV SONAR_SCANNER_VERSION 3.3.0.1492
 
@@ -14,7 +14,10 @@ RUN \
     mv -fv /tmp/sonar-scanner-${SONAR_SCANNER_VERSION}/lib/* /usr/lib
 
 RUN \
-    apk add --no-cache nodejs && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends nodejs && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*  && \
     ls -lha /usr/bin/sonar* && \
     ln -s /usr/bin/sonar-scanner-run.sh /usr/bin/gitlab-sonar-scanner
 
