@@ -1,21 +1,18 @@
-FROM openjdk:8-jdk-alpine
+FROM node:lts-slim
 
-ENV SONAR_SCANNER_VERSION 3.3.0.1492
+ARG SONAR_SCANNER_VERSION=4.2.0.1873
 
-COPY sonar-scanner-run.sh /usr/bin
+RUN npm install --silent --save-dev -g typescript
 
-ADD https://bintray.com/sonarsource/SonarQube/download_file?file_path=org%2Fsonarsource%2Fscanner%2Fcli%2Fsonar-scanner-cli%2F${SONAR_SCANNER_VERSION}%2Fsonar-scanner-cli-${SONAR_SCANNER_VERSION}.zip /tmp/sonar-scanner.zip
+COPY sonar-scanner-run.sh /usr/bin/gitlab-sonar-scanner
+ADD https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux.zip /tmp/sonar-scanner.zip
 
-WORKDIR /tmp
+RUN apt-get update -qq && \
+    apt-get install -y unzip && \
+    unzip -d /opt /tmp/sonar-scanner.zip && \
+    rm /tmp/sonar-scanner.zip && \
+    rm -rf /var/lib/apt/lists
 
-RUN \
-    unzip /tmp/sonar-scanner.zip && \
-    mv -fv /tmp/sonar-scanner-${SONAR_SCANNER_VERSION}/bin/sonar-scanner /usr/bin && \
-    mv -fv /tmp/sonar-scanner-${SONAR_SCANNER_VERSION}/lib/* /usr/lib
+ENV PATH=/opt/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin:$PATH
 
-RUN \
-    apk add --no-cache nodejs && \
-    ls -lha /usr/bin/sonar* && \
-    ln -s /usr/bin/sonar-scanner-run.sh /usr/bin/gitlab-sonar-scanner
-
-WORKDIR /usr/bin
+ENTRYPOINT /usr/bin/gitlab-sonar-scanner
