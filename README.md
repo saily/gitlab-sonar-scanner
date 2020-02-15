@@ -22,7 +22,9 @@ stages:
 
 sonarqube:
   stage: analysis
-  image: widerin/gitlab-sonar-scanner:latest
+  image:
+    name: widerin/gitlab-sonar-scanner:latest
+    entrypoint: [""]
   variables:
     SONAR_URL: http://your.sonarqube.server
   before_script:
@@ -32,7 +34,6 @@ sonarqube:
       -Dsonar.login="${SONAR_LOGIN}"
       -Dsonar.host.url="${SONAR_URL}"
       -Dsonar.branch.name=${CI_COMMIT_REF_NAME}
-      -Dsonar.projectBaseDir="$(pwd)"
       -Dsonar.projectName="${CI_PROJECT_PATH}"
       -Dsonar.projectKey="gitlab-${CI_PROJECT_ID}"
       -Dsonar.projectVersion="$(git describe --tags $(git rev-list --tags --max-count=1))"
