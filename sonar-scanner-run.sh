@@ -10,13 +10,6 @@ URL=$SONAR_URL
 
 COMMAND="sonar-scanner -Dsonar.host.url=$URL"
 
-if ! grep -q sonar.projectKey "sonar-project.properties"; then
-  if [ -z ${SONAR_PROJECT_KEY+x} ]; then
-    SONAR_PROJECT_KEY=$CI_PROJECT_NAME
-  fi
-  COMMAND="$COMMAND -Dsonar.projectKey=$SONAR_PROJECT_KEY"
-fi
-
 if [ ! -z ${SONAR_TOKEN+x} ]; then
   COMMAND="$COMMAND -Dsonar.login=$SONAR_TOKEN"
 fi
@@ -28,6 +21,10 @@ fi
 deprecated() {
     echo "[WARN] $1 has been ignored, please set '$2' in your 'sonar-project.properties' file."
 }
+
+if [ ! -z ${SONAR_PROJECT_KEY+x} ]; then
+    deprecated SONAR_PROJECT_KEY sonar.projectKey
+fi
 
 if [ ! -z ${SONAR_PROJECT_VERSION+x} ]; then
     deprecated SONAR_PROJECT_VERSION sonar.projectVersion

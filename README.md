@@ -54,7 +54,7 @@ You also need to give developer permissions to the user that will comment in git
 Environment variables
 ---------------------
 
-Can be checked in the official documentation: https://docs.sonarqube.org/display/SONARQUBE43/Analysis+Parameters
+Can be checked in the official documentation: https://docs.sonarqube.org/latest/analysis/analysis-parameters/
 
 - `SONAR_URL`
 - `SONAR_TOKEN`
@@ -62,6 +62,7 @@ Can be checked in the official documentation: https://docs.sonarqube.org/display
 
 Deprecated and ignored environment variables:
 
+- `SONAR_PROJECT_KEY`
 - `SONAR_PROJECT_VERSION`
 - `SONAR_GITLAB_PROJECT_ID`
 - `SONAR_SOURCES`
