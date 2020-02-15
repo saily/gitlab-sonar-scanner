@@ -27,13 +27,15 @@ sonarqube:
     SONAR_URL: http://your.sonarqube.server
   before_script:
     - sonar-scanner --version
-    - echo "sonar.branch.name=${CI_COMMIT_REF_NAME}" >> sonar-project.properties
-    - echo "sonar.projectKey=gitlab-${CI_PROJECT_ID}" >> sonar-project.properties
-    - echo "sonar.projectName=${CI_PROJECT_PATH}" >> sonar-project.properties
-    # Use last git-tag as projectVersion
-    - echo "sonar.projectVersion=$(git describe --tags $(git rev-list --tags --max-count=1))" >> sonar-project.properties
   script:
-    - gitlab-sonar-scanner
+    - sonar-scanner
+      -Dsonar.login="${SONAR_LOGIN}"
+      -Dsonar.host.url="${SONAR_URL}"
+      -Dsonar.branch.name=${CI_COMMIT_REF_NAME}
+      -Dsonar.projectBaseDir="$(pwd)"
+      -Dsonar.projectName="${CI_PROJECT_PATH}"
+      -Dsonar.projectKey="gitlab-${CI_PROJECT_ID}"
+      -Dsonar.projectVersion="$(git describe --tags $(git rev-list --tags --max-count=1))"
 ~~~
 
 Remember to also create a `sonar-project.properties` file:
@@ -71,19 +73,6 @@ Deprecated and ignored environment variables:
 - `SONAR_ENCODING`
 - `SONAR_BRANCH`
 - `SONAR_ANALYSIS_MODE`
-
-### Defining custom sonar-scanner options
-
-You can pass any additional option to the `gitlab-sonar-scanner` binnary, if needed:
-
-~~~yaml
-sonarqube-reports:
-  image: widerin/gitlab-sonar-scanner:latest
-  variables:
-    SONAR_URL: http://your.sonarqube.server
-  script:
-  - gitlab-sonar-scanner -Dsonar.custom.param=whatever -Dsonar.custom.param2=whichever
-~~~
 
 ### Deprecated docker tags
 
