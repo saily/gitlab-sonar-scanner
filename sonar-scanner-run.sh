@@ -55,7 +55,7 @@ if [ ! -z ${SONAR_BRANCH+x} ]; then
 fi
 
 if [ ! -z ${SONAR_ANALYSIS_MODE+x} ]; then
-    log_dropped SONAR_BRANCH sonar.branch.name
+    echo "[WARN] SONAR_ANALYSIS_MODE is no longer supported by SonarQube"
 fi
 
 $COMMAND $@
