@@ -12,6 +12,7 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists && \
     npm install --silent --save-dev -g typescript
 
-ENV PATH=/opt/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin:$PATH
+ENV PATH=/opt/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin:$PATH \
+    NODE_PATH=/usr/local/lib/node_modules
 
 ENTRYPOINT sonar-scanner
