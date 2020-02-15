@@ -31,7 +31,7 @@ sonarqube:
     - echo "sonar.projectKey=gitlab-${CI_PROJECT_ID}" >> sonar-project.properties
     - echo "sonar.projectName=${CI_PROJECT_PATH}" >> sonar-project.properties
     # Use last git-tag as projectVersion
-    - echo "sonar.projectVersion==$(git describe --tags $(git rev-list --tags --max-count=1))" >> sonar-project.properties
+    - echo "sonar.projectVersion=$(git describe --tags $(git rev-list --tags --max-count=1))" >> sonar-project.properties
   script:
     - gitlab-sonar-scanner
 ~~~
