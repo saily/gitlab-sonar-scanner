@@ -1,5 +1,7 @@
 FROM node:lts-slim
 
+MAINTAINER Daniel Widerin <daniel@widerin.net>
+
 ARG SONAR_SCANNER_VERSION=4.2.0.1873
 
 ADD https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux.zip /tmp/sonar-scanner.zip
